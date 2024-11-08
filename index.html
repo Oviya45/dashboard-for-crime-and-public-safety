@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crime and Public Safety Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="header">Crime and Public Safety Dashboard</div>
+  
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul>
+        <li onclick="showSection('overview')">Overview</li>
+        <li onclick="showSection('crime-stats')">Crime Statistics</li>
+        <li onclick="showSection('safety-tips')">Safety Tips</li>
+        <li onclick="showSection('reports')">Reports</li>
+        <li onclick="showSection('emergency-contacts')">Emergency Contacts</li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Overview Section -->
+      <div id="overview" class="info-section">
+        <h2>Overview</h2>
+        <p>This dashboard provides real-time insights into local crime data to help the community stay informed and proactive in maintaining safety. It includes recent crime statistics, comparisons to previous years, safety tips, and a list of emergency contacts.</p>
+      </div>
+
+      <!-- Crime Statistics Section -->
+      <div id="crime-stats" class="info-section">
+        <div class="chart-container">
+          <canvas id="crimePieChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="crimeComparisonChart"></canvas>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Incident Type</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Reported By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Assault</td>
+                <td>2024-01-15</td>
+                <td>Main St.</td>
+                <td>Officer A</td>
+              </tr>
+              <tr>
+                <td>Theft</td>
+                <td>2024-01-20</td>
+                <td>2nd Ave.</td>
+                <td>Officer B</td>
+              </tr>
+              <tr>
+                <td>Burglary</td>
+                <td>2024-02-02</td>
+                <td>Central Blvd.</td>
+                <td>Officer C</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Safety Tips Section -->
+      <div id="safety-tips" class="info-section">
+        <h2>Safety Tips</h2>
+        <p>Stay vigilant and report suspicious activity immediately. Lock doors and windows, and use outdoor lighting. Avoid walking alone at night, and always inform someone of your whereabouts.</p>
+      </div>
+
+      <!-- Reports Section -->
+      <div id="reports" class="info-section">
+        <h2>Reports</h2>
+        <p>View recent crime reports in your area. You can report a crime directly from this dashboard, helping law enforcement respond to incidents promptly.</p>
+      </div>
+
+      <!-- Emergency Contacts Section -->
+      <div id="emergency-contacts" class="info-section">
+        <h2>Emergency Contacts</h2>
+        <ul>
+          <li>Local Police Department: 123-456-7890</li>
+          <li>Fire Department: 098-765-4321</li>
+          <li>Ambulance Service: 911</li>
+          <li>Neighborhood Watch: 555-123-4567</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>

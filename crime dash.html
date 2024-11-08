@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crime and Public Safety Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f3f5;
+      color: #333;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 20px;
+      justify-content: center;
+    }
+
+    .sidebar {
+      background-color: #34495e;
+      color: #ecf0f1;
+      width: 250px;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin: 15px 0;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar li:hover {
+      background-color: #16a085;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .info-section {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .info-section h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .info-section p {
+      font-size: 1.1rem;
+      color: #7f8c8d;
+      line-height: 1.5;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #2c3e50;
+      color: #fff;
+    }
+
+    .chart-container {
+      margin-top: 1rem;
+      height: 300px;
+      position: relative;
+    }
+
+    @media (max-width: 1200px) {
+      .dashboard {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sidebar {
+        width: 100%;
+        margin-bottom: 1.5rem;
+      }
+
+      .content {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        font-size: 1.5rem;
+      }
+
+      .sidebar {
+        width: 100%;
+        padding: 1rem;
+      }
+
+      .content {
+        gap: 1rem;
+      }
+
+      .chart-container {
+        height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        font-size: 1.3rem;
+      }
+
+      .sidebar {
+        padding: 0.5rem;
+      }
+
+      .content {
+        gap: 1rem;
+      }
+
+      .table-container table {
+        font-size: 0.9rem;
+      }
+
+      .chart-container {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">Crime and Public Safety Dashboard</div>
+  
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul>
+        <li onclick="showSection('overview')">Overview</li>
+        <li onclick="showSection('crime-stats')">Crime Statistics</li>
+        <li onclick="showSection('safety-tips')">Safety Tips</li>
+        <li onclick="showSection('reports')">Reports</li>
+        <li onclick="showSection('emergency-contacts')">Emergency Contacts</li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Overview Section -->
+      <div id="overview" class="info-section">
+        <h2>Overview</h2>
+        <p>This dashboard provides real-time insights into local crime data to help the community stay informed and proactive in maintaining safety. It includes recent crime statistics, comparisons to previous years, safety tips, and a list of emergency contacts.</p>
+      </div>
+
+      <!-- Crime Statistics Section -->
+      <div id="crime-stats" class="info-section">
+        <div class="chart-container">
+          <canvas id="crimePieChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="crimeComparisonChart"></canvas>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Incident Type</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Reported By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Assault</td>
+                <td>2024-01-15</td>
+                <td>Main St.</td>
+                <td>Officer A</td>
+              </tr>
+              <tr>
+                <td>Theft</td>
+                <td>2024-01-20</td>
+                <td>2nd Ave.</td>
+                <td>Officer B</td>
+              </tr>
+              <tr>
+                <td>Burglary</td>
+                <td>2024-02-02</td>
+                <td>Central Blvd.</td>
+                <td>Officer C</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Safety Tips Section -->
+      <div id="safety-tips" class="info-section">
+        <h2>Safety Tips</h2>
+        <p>Stay vigilant and report suspicious activity immediately. Lock doors and windows, and use outdoor lighting. Avoid walking alone at night, and always inform someone of your whereabouts.</p>
+      </div>
+
+      <!-- Reports Section -->
+      <div id="reports" class="info-section">
+        <h2>Reports</h2>
+        <p>View recent crime reports in your area. You can report a crime directly from this dashboard, helping law enforcement respond to incidents promptly.</p>
+      </div>
+
+      <!-- Emergency Contacts Section -->
+      <div id="emergency-contacts" class="info-section">
+        <h2>Emergency Contacts</h2>
+        <ul>
+          <li>Local Police Department: 123-456-7890</li>
+          <li>Fire Department: 098-765-4321</li>
+          <li>Ambulance Service: 911</li>
+          <li>Neighborhood Watch: 555-123-4567</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('.info-section').forEach(section => {
+        section.style.display = 'none';
+      });
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    const ctxPie = document.getElementById('crimePieChart').getContext('2d');
+    new Chart(ctxPie, {
+      type: 'pie',
+      data: {
+        labels: ['Assault', 'Theft', 'Burglary', 'Vandalism'],
+        datasets: [{
+          data: [40, 30, 20, 10],
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50']
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+
+    const ctxBar = document.getElementById('crimeComparisonChart').getContext('2d');
+    new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Assault', 'Theft', 'Burglary', 'Vandalism'],
+        datasets: [
+          { label: '2023', data: [30, 25, 15, 5], backgroundColor: 'rgba(54, 162, 235, 0.5)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 },
+          { label: '2024', data: [40, 30, 20, 10], backgroundColor: 'rgba(255, 99, 132, 0.5)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true }
+        },
+        plugins: { legend: { position: 'top' } }
+      }
+    });
+
+    showSection('overview');
+  </script>
+
+</body>
+</html>
